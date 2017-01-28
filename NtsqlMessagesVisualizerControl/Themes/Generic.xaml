@@ -7,7 +7,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:NtsqlMessagesVisualizerControl}">
-                    <RichTextBox x:Name="PART_View" />
+                    <RichTextBox x:Name="PART_View" Background="Beige" IsReadOnly="True" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

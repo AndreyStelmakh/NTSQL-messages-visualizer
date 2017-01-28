@@ -25,10 +25,29 @@ namespace Lmx.UI.Controls
             _viewRichEditBox = GetTemplateChild(ElementViewRichEditBox) as RichTextBox;
         }
 
-        private static FlowDocument ToFlowDocument(XDocument xDocument)
+        private static FlowDocument ToFlowDocument(XDocument document)
         {
-            throw new NotImplementedException();
-            return new FlowDocument();
+            var doc = new FlowDocument();
+
+            doc.Blocks.Add(ToSection(document.Elements().First()));
+
+            return doc;
+        }
+
+        private static Section ToSection(XElement element)
+        {
+            var section = new Section() { Margin = new Thickness(15, 0, 0, 0) };
+            var headerAttribute = element.Attribute("text");
+
+            if (headerAttribute != null)
+                section.Blocks.Add(new Paragraph(new Run(headerAttribute.Value)) { Margin = new Thickness(0), Padding = new Thickness(0) });
+
+            foreach(var subElement in element.Elements())
+            {
+                section.Blocks.Add(ToSection(subElement));
+            }
+
+            return section;
         }
 
         public XDocument Value
@@ -42,7 +61,7 @@ namespace Lmx.UI.Controls
             {
                 var ctrl = d as NtsqlMessagesVisualizerControl;
 
-                if(ctrl!= null && e.NewValue is XDocument)
+                if(ctrl != null && e.NewValue is XDocument)
                 {
                     ctrl._viewRichEditBox.Document = ToFlowDocument((XDocument)e.NewValue);
                 }

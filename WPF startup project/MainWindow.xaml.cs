@@ -43,6 +43,9 @@ namespace WPF_startup_project
         public MainWindow()
         {
             InitializeComponent();
+
+            DataContext = this;
+           
         }
 
         private XDocument _ntsqlmessage;
@@ -51,7 +54,22 @@ namespace WPF_startup_project
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            Ntsqlmessage = XDocument.Parse("<err text='Сохранение документа'><err text='Повторяющиеся получатели'><err text='34563'/><err text='234'/><err text='65564'/></err></err>");
+            Ntsqlmessage = XDocument.Parse(
+                @"<err text='Ошибки'>
+                    <err text='В шапке документа'>
+                        <err text='Not enough space'/>
+                    </err>
+                    <err text='В списке получателей'>
+                        <err text='Повторяющиеся получатели'>
+                            <err text='34563'/><err text='234'/><err text='65564'/></err>
+                        <err text='Левые получатели'>
+                            <err text='3'/><err text='2'/></err>
+                    </err>
+                    <err text='В списке периодов'>
+                        <err text='Повторяющиеся периоды'>
+                            <err text='ннкр'/><err text='3453апцук'/><err text='wewg45'/>
+                    </err></err>
+                </err>");
         }
     }
 }
